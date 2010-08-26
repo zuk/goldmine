@@ -27,4 +27,7 @@ sit.logout!
 puts "Logging out from #{sit}..."
 
 
-puts positions.to_yaml
+filename = Time.now.strftime('%Y-%m-%dT%H:%M:%S%z')+'.yml'
+File.open(File.dirname(__FILE__)+'/data/'+filename, 'w') do |f|
+  f.puts positions.to_yaml
+end

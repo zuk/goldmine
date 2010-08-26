@@ -24,5 +24,9 @@ module Brokers
     def as_i(str)
       str.gsub(/[^\d\.\-]/,'').to_i
     end
+    
+    def now_string
+      Time.now.strftime('%Y-%m-%dT%H:%M:%S%z')
+    end
   end
 end
