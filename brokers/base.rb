@@ -1,7 +1,5 @@
 require 'mechanize'
 require 'nokogiri'
-require 'active_support'
-
 require 'yaml'
 
 module Brokers
@@ -12,7 +10,10 @@ module Brokers
     
     def read_credentials!(key)
       creds_filename = File.dirname(__FILE__) + '/credentials.yml'
-      @credentials = HashWithIndifferentAccess.new(YAML.load(File.open(creds_filename)))[key]
+      creds = YAML.load(File.open(creds_filename))
+      creds.each {|k,v| creds[k.kind_of?(Symbol) ? k.to_s : k.to_sym] = v }
+      creds[key].each {|k,v| creds[key][k.kind_of?(Symbol) ? k.to_s : k.to_sym] = v } 
+      @credentials = creds[key]
     end
     
     protected
