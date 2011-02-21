@@ -1,4 +1,2 @@
 credentials.yml
 data/*
-brokers/trade_freedom.rb
-brokers/scotia_itrade.rb
