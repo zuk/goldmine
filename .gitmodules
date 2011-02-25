@@ -1,0 +1,3 @@
+[submodule "glint/js/g.raphael"]
+	path = glint/js/g.raphael
+	url = git://github.com/DmitryBaranovskiy/g.raphael.git
