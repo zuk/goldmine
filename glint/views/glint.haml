@@ -3,8 +3,12 @@
 %html
   %head
   %title Goldmine
-  - Dir['js/*.js'].each do |f|
-    %script{:type => 'text/javascript', :src => "js/#{f}"}
+  %script{:type => 'text/javascript', :src => 'https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js'}
+  - ['raphael', 'g.raphael/g.raphael', 'g.raphael/g.pie', 'g.raphael/g.line', 'g.raphael/g.dot', 'g.raphael/g.bar', 'g.raphael/g.pie', 'glint'].each do |f|
+    %script{:type => 'text/javascript', :src => "js/#{f}.js"}
+  :javascript
+    var hist = {x: #{@history[:x].to_json}, y: #{@history[:y].to_json}}
+    var curr = #{@current.to_json}
   %body
-    %h1 I am the international space station
-    %p Sign my guestbook
+    %div{:id => 'history'}
+    %div{:id => 'pie'}
