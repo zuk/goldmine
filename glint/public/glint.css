@@ -1,0 +1,14 @@
+div.history path {
+  stroke: steelblue;
+  stroke-width: 2;
+  fill: none;
+}
+ 
+div.history line {
+  stroke: black;
+}
+ 
+div.history text {
+  font-family: Arial;
+  font-size: 9pt;
+}
