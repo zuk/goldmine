@@ -23,26 +23,27 @@ $(document).ready(function() {
     
     // D3
     
-    margin = 20
+    margin = 50
     w = 1000
     h = 500
-    data = hist.y
+    
+    hist.dates = hist.x.map(function(val){return new Date(val*1000)})
     
     var vis = d3.select('#hist2')
-        .append('svg:svg')
-        .attr('width', w)
-        .attr('height', h)
+                .append('svg:svg')
+                .attr('width', w)
+                .attr('height', h)
     var g = vis.append('svg:g')
-        .attr('transform', 'translate(0,'+h+')')
+                .attr('transform', 'translate(0,'+h+')')
     
-    y = d3.scale.linear().domain([0, d3.max(data)]).range([0 + margin, h - margin]),
+    y = d3.scale.linear().domain([0, d3.max(hist.y)]).range([0 + margin, h - margin]),
     x = d3.scale.linear().domain([0, d3.max(hist.x)]).range([0 + margin, w - margin])
     
     var line = d3.svg.line()
         .x(function(d,i) {return x(i)})
         .y(function(d) {return -1 * y(d)})
     
-    g.append('svg:path').attr('d', line(data))
+    g.append('svg:path').attr('d', line(hist.y))
     g.append("svg:line")
         .attr("x1", x(0))
         .attr("y1", -1 * y(0))
@@ -52,7 +53,7 @@ $(document).ready(function() {
         .attr("x1", x(0))
         .attr("y1", -1 * y(0))
         .attr("x2", x(0))
-        .attr("y2", -1 * y(d3.max(data)))
+        .attr("y2", -1 * y(d3.max(hist.y)))
     g.selectAll(".xLabel")
         .data(x.ticks(5))
         .enter().append("svg:text")
@@ -86,4 +87,14 @@ $(document).ready(function() {
         .attr("x1", x(-0.3))
         .attr("y2", function(d) { return -1 * y(d); })
         .attr("x2", x(0))
+        
+        
+    var vis2 = d3.select('#hist3')
+                .append('svg:svg')
+                .attr('width', w)
+                .attr('height', h)
+    var g = vis.append('svg:g')
+                .attr('transform', 'translate(0,'+h+')')
+                
+    
 })
