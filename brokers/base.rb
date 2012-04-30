@@ -1,6 +1,7 @@
 require 'mechanize'
 require 'nokogiri'
 require 'yaml'
+require 'hashie'
 
 module Brokers
   class Base
@@ -10,9 +11,7 @@ module Brokers
     
     def read_credentials!(key)
       creds_filename = File.dirname(__FILE__) + '/credentials.yml'
-      creds = YAML.load(File.open(creds_filename))
-      creds.each {|k,v| creds[k.kind_of?(Symbol) ? k.to_s : k.to_sym] = v }
-      creds[key].each {|k,v| creds[key][k.kind_of?(Symbol) ? k.to_s : k.to_sym] = v } 
+      creds = Hashie::Mash.new YAML.load(File.open(creds_filename))
       @credentials = creds[key]
     end
     
