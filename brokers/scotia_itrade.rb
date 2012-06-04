@@ -29,7 +29,7 @@ module Brokers
     end
   
     def logout!
-      @mech.get('https://swww.scotiaitrade.com/NASApp/doLogout')
+      #@mech.get('https://swww.scotiaitrade.com/NASApp/doLogout')
     end
   
     def get_positions
@@ -47,6 +47,7 @@ module Brokers
         pos[:broker] = to_s
         #pos[:value] = as_f(pos_html.xpath('//td/b[contains(text(),"Trade Cash")]/../../following-sibling::tr/td/font').first.text)
         
+        #puts pos_html
         pos[:value] = as_f((pos_html.xpath('//table[@summary="summary balance"]/tbody/tr/td').last > 'div').text)
         pos[:time] = fetch_time
         positions << pos
@@ -107,6 +108,7 @@ module Brokers
       challenge = Nokogiri::HTML(challenge_html)
       
       q = challenge.xpath('//label[@for="question1"]/../following-sibling::td').first
+      submit = challenge.xpath('//input[@title="Continue"]').first
       
       puts "CHALLENGE: #{q.text.to_s.inspect}"
       if @credentials[:challenges] && @credentials[:challenges][q.text.to_s]
@@ -120,7 +122,7 @@ module Brokers
         'javax.faces.ViewState' => 'j_id2',
         'mfaAuth_form:answer_0' => answer,
         'mfaAuth_form' => 'mfaAuth_form',
-        'mfaAuth_form:j_id106' => 'Continue',
+        submit.attr(:name) => 'Continue',
         'mfaAuth_form:register' => '0'
       })
     end
